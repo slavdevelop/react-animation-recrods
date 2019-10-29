@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+import Form from './components/Form';
+import ListContainer from './components/ListContainer';
+
+let count = 3;
+
+const App = () => {
+  const [value, setValue] = useState('');
+  const [items, setItems] = useState([
+    {
+      id: 1,
+      text: 'There is no passion, there is serenity.'
+    },
+    {
+      id: 2,
+      text: 'There is no chaos, there is harmony.'
+    }
+  ]);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    setItems([...items, { id: count, text: value }]);
+    setValue('');
+    count++;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="container">
+      <section className="row justify-content-center mt-3">
+        <Form value={value} setValue={setValue} handleSubmit={handleSubmit} />
+      </section>
+      <section className="row justify-content-center mt-2">
+        <ListContainer items={items} />
+      </section>
+    </main>
   );
-}
+};
 
 export default App;
